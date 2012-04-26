@@ -11,7 +11,8 @@
 	// Number of seconds in every time division
 	var days	= 24*60*60,
 		hours	= 60*60,
-		minutes	= 60;
+		minutes	= 60,
+		pid;
 	
 	// Creating the plugin
 	$.fn.countdown = function(prop){
@@ -60,13 +61,23 @@
 			options.callback(d, h, m, s);
 			
 			// Scheduling another call of this function in 1s
-			setTimeout(tick, 1000);
+			pid = setTimeout(tick, 1000);
 		})();
 		
 		// This function updates two digit positions at once
 		function updateDuo(minor,major,value){
 			switchDigit(positions.eq(minor),Math.floor(value/10)%10);
 			switchDigit(positions.eq(major),value%10);
+		}
+		
+		return this;
+	};
+	
+	$.fn.countdown = function(){
+		// perhaps have options to reset to 0? or a specific time?
+		
+		if (pid) {
+			cancelTimeout(pid);
 		}
 		
 		return this;
