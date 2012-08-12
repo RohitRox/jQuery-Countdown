@@ -2,6 +2,8 @@
 
 This is a fork of jquery countdown published at [Tutorialzine](http://tutorialzine.com/2011/12/countdown-jquery/).
 
+See it in action:  [Demo](http://rohitrox.github.com/jQuery-Countdown/)
+
 This enhanced version contains abilty reset countdown at any instant programmatically,
 and hookable expire after feature as explained below:
 
