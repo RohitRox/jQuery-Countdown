@@ -24,8 +24,11 @@ $(function(){
 		
 	$('#countdown').countdown({
 		timestamp	: ts,
-		callback	: function(days, hours, minutes, seconds){
+		callback	: function(days, hours, minutes, seconds, total_sec_left){
 			
+			// the callback now has one more parameter,
+			// total_sec_left, which is total seconds remaining left 
+
 			var message = "";
 			
 			message += days + " day" + ( days==1 ? '':'s' ) + ", ";
@@ -49,6 +52,8 @@ $(function(){
 #### Now the countdown can be reset any time by calling
 ```js
 	$.countdown.reset();
+	// also a callback function can be passed
+	$.countdown.reset( function(elapsed){ alert('Resetted in '+elapsed+'seconds.'); } );
 ```
 #### After reset, calling the plugin creates new instance of countdown
 ```js

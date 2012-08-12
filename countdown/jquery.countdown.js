@@ -18,11 +18,19 @@
         hours   = 60*60,
         minutes = 60,
         _timer_handle,
-        this_id;
+        this_id,
+        time_god = 0;
 
     $.countdown = function(){
         return{
-            reset : function(){clearTimeout(_timer_handle);  }
+            reset : function(fn){ 
+                clearTimeout(_timer_handle);  
+                elapsed = time_god;
+                time_god = 0;
+                if (typeof fn == 'function'){
+                    fn(elapsed);
+                }
+            }
         }
     }();
 
@@ -36,7 +44,7 @@
         },prop);
         
         var left, d, h, m, s, positions;
-        self = this;
+        var self = this;
         this_id = self.attr('id');
         // Initialize the plugin
         _init(self, options);
@@ -48,7 +56,8 @@
         function tick(){
         // Time left
         left = Math.floor((options.timestamp - (new Date())) / 1000);
-                
+        var left_total = left;
+        time_god += 1;     
         if(left < 0){
             left = 0;
             if (typeof hook == 'function')
@@ -80,7 +89,7 @@
 
         // Calling an optional user supplied callback
         if ( typeof options.callback == 'function' ){
-        options.callback(d, h, m, s, left);
+        options.callback(d, h, m, s, left_total);
         }
         // Scheduling another call of this function in 1s
         _timer_handle = setTimeout(tick, 1000);
