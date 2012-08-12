@@ -1,8 +1,14 @@
-# jQuery Countdown
+# jQuery Countdown [Enhanced]
 
-A simple jQuery plugin for creating a countdown timer. Example:
+This is a fork of jquery countdown published at [Tutorialzine](http://tutorialzine.com/2011/12/countdown-jquery/).
+
+This enhanced version contains abilty reset countdown at any instant programmatically,
+and hookable expire after feature as explained below:
 
 ```js
+
+// Original feature and example
+
 $(function(){
 	
 	var note = $('#note'),
@@ -40,4 +46,25 @@ $(function(){
 	
 });
 ```
-For more examples go to the plugin homepage on [Tutorialzine](http://tutorialzine.com/2011/12/countdown-jquery/).
+#### Now the countdown can be reset any time by calling
+```js
+	$.countdown.reset();
+```
+#### After reset, calling the plugin creates new instance of countdown
+```js
+		$('#countdown').countdown({ ... });
+```
+
+#### The plugin now can be initialized in a completely new way, via hookable expire_after
+```js
+	// let's set our timer for 6 sec and after 6 sec timer should automatically stop and alert 'timeover baby !'
+	$('#countdown').countdown({ 
+		expire_after : 6 // put your time here in sec
+	},
+		function()
+		{
+			alert('timeover baby !'); // do after expire
+		}
+	});
+```
+
