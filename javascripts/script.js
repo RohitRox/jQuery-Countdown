@@ -47,6 +47,31 @@ $(document).ready(function(){
   $(".current-section a").click(function(){
     $(window).scrollTop(0);
     return false;
-  })
+  });
+
+  // jquery countdown code
+
+  var   ts = new Date(2012, 11, 1),
+        newYear = true;
+    
+    if((new Date()) > ts){
+        // The new year is here! Count towards something else.
+        // Notice the *1000 at the end - time must be in milliseconds
+        ts = (new Date()).getTime() + 10*24*60*60*1000;
+        newYear = false;
+    }
+        
+    $('#countdown').countdown({
+        timestamp   : ts
+    });
+
+    $('#countdown_stop').click(function(){ $.countdown.reset(); });
+    $('#countdown_exipre_after').click(function(){
+      $('#countdown').countdown({
+       expire_after : 6,
+       callback: function(d,h,m,s){ $('#time_monitor').html(s+'sec elapsed ... '); }
+      }, function(){ alert('Timeover baby !'); }
+      );
+    });
 });
 })(jQuery)

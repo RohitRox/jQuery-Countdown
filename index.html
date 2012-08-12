@@ -8,7 +8,12 @@
 
   <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
   <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="stylesheets/jquery.countdown.css"/>
+
+  <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
+  <script type="text/javascript" src="javascripts/jquery.js"></script>
+
+  <script type="text/javascript" src="javascripts/jquery.countdown.js"></script>
   <script type="text/javascript" src="javascripts/script.js"></script>
 
   <title>Jquery-countdown</title>
@@ -44,6 +49,14 @@
 and hookable expire after feature:</p>
 
 <h1>Demo</h1>
+<hr />
+<div id="countdown"></div>
+<hr />
+Lets Stop this timer: 
+<button id="countdown_stop">Stop</button>
+<br />
+Lets start a countdown that expire after 6 sec.
+ <button id="countdown_exipre_after">Start</button> <strong id="time_monitor"></strong>
         </article>
       </div>
     </div>
