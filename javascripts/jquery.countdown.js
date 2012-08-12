@@ -5,6 +5,11 @@
  * @url         http://tutorialzine.com/2011/12/countdown-jquery/
  * @license     MIT License
  */
+ /*
+ * @modified_by: RohitRox
+   @url        : https://github.com/RohitRox/jQuery-Countdown
+   @changelog  : added countdown reset feature, hookable exipre_after feature
+ */
 
 (function($){
     
@@ -12,11 +17,20 @@
     var days    = 24*60*60,
         hours   = 60*60,
         minutes = 60,
-        _timer_handle;
+        _timer_handle,
+        this_id,
+        time_god = 0;
 
     $.countdown = function(){
         return{
-            reset : function(){clearTimeout(_timer_handle);  }
+            reset : function(fn){ 
+                clearTimeout(_timer_handle);  
+                elapsed = time_god;
+                time_god = 0;
+                if (typeof fn == 'function'){
+                    fn(elapsed);
+                }
+            }
         }
     }();
 
@@ -30,9 +44,10 @@
         },prop);
         
         var left, d, h, m, s, positions;
-
+        var self = this;
+        this_id = self.attr('id');
         // Initialize the plugin
-        _init(this, options);
+        _init(self, options);
 
         if (options.expire_after != null){
             options.timestamp = (new Date()).getTime() + options.expire_after*1000;
@@ -41,7 +56,8 @@
         function tick(){
         // Time left
         left = Math.floor((options.timestamp - (new Date())) / 1000);
-                
+        var left_total = left;
+        time_god += 1;     
         if(left < 0){
             left = 0;
             if (typeof hook == 'function')
@@ -73,7 +89,7 @@
 
         // Calling an optional user supplied callback
         if ( typeof options.callback == 'function' ){
-        options.callback(d, h, m, s);
+        options.callback(d, h, m, s, left_total);
         }
         // Scheduling another call of this function in 1s
         _timer_handle = setTimeout(tick, 1000);
@@ -105,9 +121,10 @@
             }
         });
     }
+
     _updateDuo = function(minor,major,value)
                 {
-                    positions = $('#countdown').find('.position');
+                    positions = $('#'+this_id).find('.position');
                     _switchDigit(positions.eq(minor),Math.floor(value/10)%10);
                     _switchDigit(positions.eq(major),value%10);
                 }

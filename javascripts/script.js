@@ -65,11 +65,11 @@ $(document).ready(function(){
         timestamp   : ts
     });
 
-    $('#countdown_stop').click(function(){ $.countdown.reset(); });
+    $('#countdown_stop').click(function(){ $.countdown.reset(function(log){ alert('Timer resetted after '+log+'sec.'); }); });
     $('#countdown_exipre_after').click(function(){
       $('#countdown').countdown({
        expire_after : 6,
-       callback: function(d,h,m,s){ $('#time_monitor').html(s+'sec elapsed ... '); }
+       callback: function(d,h,m,s,left){ $('#time_monitor').html(left+'sec remaining ..'); }
       }, function(){ alert('Timeover baby !'); }
       );
     });
