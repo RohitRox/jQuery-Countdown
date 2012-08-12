@@ -17,7 +17,8 @@
     var days    = 24*60*60,
         hours   = 60*60,
         minutes = 60,
-        _timer_handle;
+        _timer_handle,
+        this_id;
 
     $.countdown = function(){
         return{
@@ -35,9 +36,10 @@
         },prop);
         
         var left, d, h, m, s, positions;
-
+        self = this;
+        this_id = self.attr('id');
         // Initialize the plugin
-        _init(this, options);
+        _init(self, options);
 
         if (options.expire_after != null){
             options.timestamp = (new Date()).getTime() + options.expire_after*1000;
@@ -78,7 +80,7 @@
 
         // Calling an optional user supplied callback
         if ( typeof options.callback == 'function' ){
-        options.callback(d, h, m, s);
+        options.callback(d, h, m, s, left);
         }
         // Scheduling another call of this function in 1s
         _timer_handle = setTimeout(tick, 1000);
@@ -89,7 +91,8 @@
     };
 
     function _init(elem, options)
-    { 
+    {   
+        $.countdown.reset();
         elem.html('');
         elem.addClass('countdownHolder');
 
@@ -112,7 +115,7 @@
 
     _updateDuo = function(minor,major,value)
                 {
-                    positions = $('#countdown').find('.position');
+                    positions = $('#'+this_id).find('.position');
                     _switchDigit(positions.eq(minor),Math.floor(value/10)%10);
                     _switchDigit(positions.eq(major),value%10);
                 }
